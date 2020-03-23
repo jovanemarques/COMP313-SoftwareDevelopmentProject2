@@ -37,6 +37,7 @@ module.exports = function () {
     //const user = require('../routes/user.routes');
     app.use('/', require('../routes/user.routes'));
     app.use('/', require('../routes/recipe.routes'));
+    app.use('/', require('../routes/inventory.routes'));
     
     app.use(express.static('./public'));
     return app;
