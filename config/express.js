@@ -33,10 +33,10 @@ module.exports = function () {
 
     //Routes
     require('../routes/index.routes.js')(app);
-    require('../routes/user.routes');
 
-    const user = require('../routes/user.routes');
-    app.use('/', user);
+    //const user = require('../routes/user.routes');
+    app.use('/', require('../routes/user.routes'));
+    app.use('/', require('../routes/recipe.routes'));
     
     app.use(express.static('./public'));
     return app;
