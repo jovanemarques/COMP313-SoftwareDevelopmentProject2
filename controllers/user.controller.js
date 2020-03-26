@@ -34,12 +34,17 @@ UserController.prototype.signout = (req, res) => {
 }
 
 UserController.prototype.authenticate = function(req, res, next) {
-    if (!req.body.username || !req.body.password){
+    //if (!req.body.username || !req.body.password){
+    if (!req.body.auth.email || !req.body.auth.password){
         return res.json({status:"error", message: "Username and Password are required."});
     }
-	const username = req.body.username;
-	const password  = req.body.password;
-	User.findOne({username: username}, (err, user) => {
+	// const username = req.body.username;
+    // const password  = req.body.password;
+    //const username = req.body.auth.username;
+    const email = req.body.auth.email;
+	const password  = req.body.auth.password;
+	//User.findOne({username: username}, (err, user) => {
+	User.findOne({email: email}, (err, user) => {
         if (err) {
             return next(err);
         } else {
@@ -51,7 +56,8 @@ UserController.prototype.authenticate = function(req, res, next) {
                         {algorithm: 'HS256', expiresIn: config.jwtExpirySeconds }
                     );
                     res.cookie('token', token, { maxAge: config.jwtExpirySeconds * 1000, httpOnly: true });
-                    res.status(200).send({ loged_user: user.username });
+                    //res.status(200).send({ loged_user: user.username });
+                    res.status(200).send({ screen: user.username });
                     req.user = user;
                     next()
                 } else {
