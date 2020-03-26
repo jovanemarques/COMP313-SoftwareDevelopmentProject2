@@ -34,15 +34,15 @@ UserController.prototype.signout = (req, res) => {
 }
 
 UserController.prototype.authenticate = function(req, res, next) {
-    //if (!req.body.username || !req.body.password){
-    if (!req.body.auth.email || !req.body.auth.password){
+    if (!req.body.email || !req.body.password){
+    //if (!req.body.auth.email || !req.body.auth.password){
         return res.json({status:"error", message: "Username and Password are required."});
     }
-	// const username = req.body.username;
-    // const password  = req.body.password;
+	const email = req.body.email;
+    const password  = req.body.password;
     //const username = req.body.auth.username;
-    const email = req.body.auth.email;
-	const password  = req.body.auth.password;
+    // const email = req.body.auth.email;
+	// const password  = req.body.auth.password;
 	//User.findOne({username: username}, (err, user) => {
 	User.findOne({email: email}, (err, user) => {
         if (err) {
