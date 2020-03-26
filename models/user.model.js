@@ -4,8 +4,12 @@ const saltRounds = 10;
 const Schema = mongoose.Schema;
 
 var UserSchema = new Schema({
+    employeeNumber: Number,
     firstName: String,
 	lastName: String,
+	department: String,
+	position: String,
+	phoneNumber: String,
 	email: {
 		type: String,
 		match: [/.+\@.+\..+/, "Please fill a valid email address"]
