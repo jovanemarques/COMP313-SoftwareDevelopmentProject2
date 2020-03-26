@@ -2,7 +2,9 @@
 const Schema = mongoose.Schema;
 
 var InventorySchema = new Schema({
-    name: String,
+    itemCode: String,
+    itemName: String,
+    quantity: Number,
 });
 
 InventorySchema.set('toJSON', {
