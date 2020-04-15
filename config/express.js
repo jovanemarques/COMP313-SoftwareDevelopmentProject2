@@ -25,11 +25,11 @@ module.exports = function () {
 		next();
     });
     app.use(cors());
-    app.use(session({
-        saveUninitialized: true,
-        resave: true,
-        secret: config.sessionSecret
-    }));
+    // app.use(session({
+    //     saveUninitialized: true,
+    //     resave: true,
+    //     secret: config.sessionSecret
+    // }));
 
     //Routes
     require('../routes/index.routes.js')(app);

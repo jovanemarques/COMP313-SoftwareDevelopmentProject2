@@ -5,7 +5,8 @@ const UserController = require('../controllers/user.controller');
 const user_controller = new UserController();
 
 router.post('/signin', user_controller.authenticate.bind(user_controller));
-router.get('/signout', user_controller.signout.bind(user_controller));
+// router.get('/read_cookie', user_controller.isSignedIn.bind(user_controller));
+// router.get('/signout', user_controller.signout.bind(user_controller));
 router.get('/user/:id?', user_controller.requiresLogin, user_controller.list.bind(user_controller));
 router.post('/user', user_controller.add.bind(user_controller));
 router.put('/user/:id', user_controller.requiresLogin, user_controller.update.bind(user_controller));
