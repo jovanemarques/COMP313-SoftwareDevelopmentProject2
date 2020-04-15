@@ -2,5 +2,5 @@
     db: 'mongodb://localhost/inventory-app-db',
     sessionSecret: 'app-password-01928374',
     secretKey: 'app-qweasdzc-12321',
-    jwtExpirySeconds: 300
+    jwtExpirySeconds: 86400
 };
