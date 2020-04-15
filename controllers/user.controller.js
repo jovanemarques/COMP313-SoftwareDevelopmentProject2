@@ -10,23 +10,49 @@ function UserController() {
 
 UserController.prototype = Object.create(BaseController.prototype);
 
-UserController.prototype.requiresLogin = function (req, res, next) {
-	const token = req.cookies.token
-	if (!token) {
-	  return res.json({ error: 'Authentication is required.' });
-	}
-	var payload;
-	try {
-	  payload = jwt.verify(token, config.secretKey)
-	  req.id = payload.id;
-	} catch (e) {
-	  if (e instanceof jwt.JsonWebTokenError) {
-		return res.status(401);
-	  }
-	  return res.status(400);
-	}
-    next();
-};
+UserController.prototype.requiresLogin = function(req, res, next){
+    var token = req.headers['x-access-token'] || req.headers['authorization'];
+  
+    if (token) {
+      if (token.startsWith('Bearer ')) {
+        token = token.slice(7, token.length);
+      }
+      jwt.verify(token, config.secretKey, {},(err, decoded) => {
+        if (err) {
+          return res.status(401).json({
+            success: false,
+            message: `Token is invalid! \n Error:${err.message}`
+          });
+        } else {
+          req.decoded = decoded;
+          next();
+        }
+      });
+    } else {
+      return res.status(401).json({
+        success: false,
+        message: 'Auth token is not given'
+      });
+    }
+  }
+
+// UserController.prototype.requiresLogin = function (req, res, next) {
+// 	const token = req.cookies.token
+// 	if (!token) {
+// 	  return res.json({ error: 'Authentication is required.' });
+// 	}
+// 	var payload;
+// 	try {
+// 	  payload = jwt.verify(token, config.secretKey)
+// 	  req.id = payload.id;
+// 	} catch (e) {
+// 	  if (e instanceof jwt.JsonWebTokenError) {
+// 		return res.status(401);
+// 	  }
+// 	  return res.status(400);
+// 	}
+//     next();
+// };
 
 // //check if the user is signed in
 // UserController.prototype.isSignedIn = function (req, res, next) {
