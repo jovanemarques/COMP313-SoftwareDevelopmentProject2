@@ -1,3 +1,3 @@
 ﻿exports.render = function (req, res) {    
-    res.send('Express REST API');   
+    res.send('The server is online.');   
 };
