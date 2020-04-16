@@ -10,11 +10,17 @@ var ItemSchema = new Schema({
 ItemSchema.pre('remove', { document: true, query: false }, function() {
     const that = this;
     const Recipe = require('./recipe.model');
-    Recipe.find({items: that._id.toJSON()}, function (err, docs) {
+    Recipe.find({'items.item': that._id.toJSON()}, function (err, docs) {
         if (err) return console.log(err);
         if (docs && docs.length > 0){
             docs.forEach(d => {
-                d.items.pull(that._id);
+                console.log(d.items);
+                d.items.forEach(i => {
+                    if (i.item.toJSON() == that._id.toJSON()) {
+                        i.remove();
+                    }
+                });;
+                console.log(d.items);
                 d.save(function (err2, recipe) {
                     if (err2) return console.log(err2);
                 });

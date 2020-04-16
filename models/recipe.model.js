@@ -4,8 +4,13 @@ const Schema = mongoose.Schema;
 var RecipeSchema = new Schema({
     name: String,
     items:[{
-        type: Schema.Types.ObjectId,
-        ref: 'Item'
+        item: {
+            type: Schema.Types.ObjectId,
+            ref: 'Item'
+        },
+        quantity: {
+            type: Number,
+        }
     }]
 });
 

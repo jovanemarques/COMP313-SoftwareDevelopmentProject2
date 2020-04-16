@@ -13,13 +13,15 @@ RecipeController.prototype.listWithItems = function(req, res) {
     if (req.params.id) {
         Recipe
         .findById(req.params.id)
-        .populate('items')
+        .populate('items.item')
         .exec(function(err, model) {
             if (err) return res.status(500).send(err);
             res.send(model);
         }); 
     } else {
-        Recipe.find({}, function(err, model) {
+        Recipe
+        .find({})
+        .exec(function(err, model) {
             if (err) return res.status(500).send(err);
             res.json(model);
         })
