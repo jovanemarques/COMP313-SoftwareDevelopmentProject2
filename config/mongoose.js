@@ -7,7 +7,7 @@ module.exports = function () {
     })
     .then(() => console.log('DB Connected!'))
     .catch(err => {
-        console.log('Error');
+        console.log('DB Connection Error: ' + err);
     });
     return db;
 };
